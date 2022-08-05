@@ -17,8 +17,8 @@
 
 ### 1-2. 사용 엔진
 Unreal Engine 5
-- Control Rig Plugin의 UE5에서의 정식지원
-- 퀄리티 높은 렌더링 결과를 뽑아낼 수 있다.
+- Control Rig Plugin 정식지원
+- 퀄리티 높은 렌더링 결과
 
 
 ## 2. 알고리즘
@@ -39,6 +39,8 @@ Inverse Kinematic을 이용하여 케릭터 애니메이션을 구현하는 기�
 Point와 Point를 이어 Line을 만드는 Unreal Engine의 기본 Actor이다.
 
 ## 4. 최종 결과 
+### 4-1. Procedural Animation
+### 4-2. Procedural Spline Generation
 
 ## 5. 결론
-
+상황에 따라 적절한 Harris 3D 활용이 필요하다.
