@@ -17,39 +17,57 @@ Unreal Engine 5
 
 ## 2. 알고리즘
 ### 2-1. Harris 3D
-이미지 -> 돌 , 의자
 영상처리의 알고리즘인 Harris Corner Detection을 3차원에서 활용할 수 있도록 하는 알고리즘
 
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+결과물
+
 ### 2-2. Non-Maximum Suppression
-이미지 -> NMS 설명
--> 의자 결과
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
 딥러닝 영상처리에서 중복도를 줄이기 위해 사용되는 알고리즘
 
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+
+Intersection of Union은 두 keypoint의 거리 및 방향의 유사성으로 대체
+
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+결과물
+
 ### 2-3. Vertex Type Detection
-이미지 -> Vertex 벡터 연산 설명
-이미지 -> 돌다리, 
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
 Keypoint의 특성을 판단하기 위한 알고리즘
+
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+결과물
+
 
 ## 3. 기능 구현
 ### 3-1. Procedural Animation
-이미지 -> 일반 등반 모습
-Inverse Kinematic을 이용하여 케릭터 애니메이션을 구현하는 기법
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+Inverse Kinematic을 이용하여 암벽등반하는 케릭터 애니메이션을 구현
 
 ### 3-2. Procedural Spline Generation
-이미지 -> 움직여서 Spline 생성하는 모습
-Point와 Point를 이어 Line을 만드는 Unreal Engine의 기본 Actor이다.
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
 
 ## 4. 최종 결과 
 ### 4-1. Procedural Animation
-이미지 추가 예정
-- 마네킹 등반
+<img src = "https://user-images.githubusercontent.com/30585313/183239606-e3e10825-24ba-4611-82d4-f6cd6d8480d7.gif" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183240964-277e3d01-ee7f-4e77-b5b9-8bdc822dcaed.gif" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183240975-3416c43a-7f37-4145-b156-1141d6ff8106.gif" width="50%" height="50%">
 
 ### 4-2. Procedural Spline Generation
-이미지
-- 스즈메
-- 고드름
-- 등나무
-- 크리스마스
+<img src = "https://user-images.githubusercontent.com/30585313/183239580-5e06a2cf-ceba-427e-9df8-1e74593f795e.gif" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183239595-7f28b9ee-be49-4751-9ca7-d21fbe3be5ba.gif" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183239597-970b62da-b91a-4f6d-ad65-d882bd5664f5.gif" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183239600-283e76e4-c234-4db9-b8ea-51a8da8bfa6e.gif" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183239602-61db2ba0-b174-4da7-b9fd-25f5c23f044f.gif" width="50%" height="50%">
+
 
 ## 5. 결론
 애니메이션: 순간 어색함
