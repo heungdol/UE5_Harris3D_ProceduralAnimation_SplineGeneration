@@ -19,40 +19,39 @@ Unreal Engine 5
 ### 2-1. Harris 3D
 영상처리의 알고리즘인 Harris Corner Detection을 3차원에서 활용할 수 있도록 하는 알고리즘
 
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238515-128fa6f9-b6ea-4339-80fc-2ffc9204d529.png" width="50%" height="50%">
 결과물
 
 ### 2-2. Non-Maximum Suppression
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238516-7a64aeec-cb4a-43b8-afa7-648141ebbeb4.png" width="50%" height="50%">
 딥러닝 영상처리에서 중복도를 줄이기 위해 사용되는 알고리즘
 
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238522-4c00326c-76ac-4a55-a372-ba697ed76d50.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238524-7aa1dfec-3fdb-40f6-a833-b8b62d8935e5.png" width="50%" height="50%">
 
 Intersection of Union은 두 keypoint의 거리 및 방향의 유사성으로 대체
 
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238514-740b4932-80a4-475f-bb3e-2a2732773d0d.png" width="50%" height="50%">
 결과물
 
 ### 2-3. Vertex Type Detection
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
-Keypoint의 특성을 판단하기 위한 알고리즘
+<img src = "https://user-images.githubusercontent.com/30585313/183240286-b7120bfb-90a9-457e-a06f-f144a86f68f9.png" width="50%" height="50%">
+Keypoint의 특성을 판단하기 위한 벡터연산
 
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183240288-5317a46d-c214-4b86-b57d-1fc167bbbbae.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183240291-c7ffd0ac-57ff-4c82-b70c-0fd526423862.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183240292-900c39c4-28ae-491d-be86-c360050b6e47.png" width="50%" height="50%">
 결과물
 
 
 ## 3. 기능 구현
 ### 3-1. Procedural Animation
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238506-89fcf555-4f9b-4f54-8262-a42f7bb39ccb.gif" width="50%" height="50%">
 Inverse Kinematic을 이용하여 암벽등반하는 케릭터 애니메이션을 구현
 
 ### 3-2. Procedural Spline Generation
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
-<img src = "https://user-images.githubusercontent.com/30585313/174285771-6befc042-6617-402d-965e-739d024939b7.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238507-e3f74806-f44e-4f4e-a38a-3cd8f3c1d599.gif" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/183238509-d4fe67c7-5ae3-437c-b84a-fef4f240b496.gif" width="50%" height="50%">
 Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
 
 ## 4. 최종 결과 
@@ -70,7 +69,4 @@ Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
 
 
 ## 5. 결론
-애니메이션: 순간 어색함
-Spline: 뚫려 생성된 모습
 
-상황에 따라 적절한 Harris 3D 활용이 필요하다.
