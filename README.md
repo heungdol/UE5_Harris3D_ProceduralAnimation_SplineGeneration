@@ -21,6 +21,8 @@ Unreal Engine 5
 
 <img src = "https://user-images.githubusercontent.com/30585313/183238515-128fa6f9-b6ea-4339-80fc-2ffc9204d529.png" width="50%" height="50%">
 결과물
+<br>
+- 특징이 되는 부분에서 불필요한 Keypoint들이 선별된 것을 확인할 수 있음
 
 ### 2-2. Non-Maximum Suppression
 <img src = "https://user-images.githubusercontent.com/30585313/183238516-7a64aeec-cb4a-43b8-afa7-648141ebbeb4.png" width="50%" height="50%">
@@ -28,11 +30,13 @@ Unreal Engine 5
 
 <img src = "https://user-images.githubusercontent.com/30585313/183238522-4c00326c-76ac-4a55-a372-ba697ed76d50.png" width="50%" height="50%">
 <img src = "https://user-images.githubusercontent.com/30585313/183238524-7aa1dfec-3fdb-40f6-a833-b8b62d8935e5.png" width="50%" height="50%">
-
 Intersection of Union은 두 keypoint의 거리 및 방향의 유사성으로 대체
 
 <img src = "https://user-images.githubusercontent.com/30585313/183238514-740b4932-80a4-475f-bb3e-2a2732773d0d.png" width="50%" height="50%">
 결과물
+<br>
+- 빨간선: 최종 선별된 Keypoint <br>
+- 노란선: 중복으로 필터링된 keypoint
 
 ### 2-3. Vertex Type Detection
 <img src = "https://user-images.githubusercontent.com/30585313/183240286-b7120bfb-90a9-457e-a06f-f144a86f68f9.png" width="50%" height="50%">
@@ -42,7 +46,10 @@ Keypoint의 특성을 판단하기 위한 벡터연산
 <img src = "https://user-images.githubusercontent.com/30585313/183240291-c7ffd0ac-57ff-4c82-b70c-0fd526423862.png" width="50%" height="50%">
 <img src = "https://user-images.githubusercontent.com/30585313/183240292-900c39c4-28ae-491d-be86-c360050b6e47.png" width="50%" height="50%">
 결과물
-
+<br>
+- 빨간선: Bump (튀어나옴) <br>
+- 주황선: Flat (평평함) <br>
+- 초록선: Sink (들어감)
 
 ## 3. 기능 구현
 ### 3-1. Procedural Animation
@@ -69,4 +76,10 @@ Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
 
 
 ## 5. 결론
+- Harris 3D, NMS, Vertex Type 모두 사용자(개발자)의 적절한 수치 조절 필요
+- 하나의 Section으로 되어있는 .OBJ 파일에 비하면, .FBX는 여러개의 Section으로 되어 있는 경우가 있음
+    - .FBX는 제대로 작동이 안될 수 있음
+- 모델의 Vertex 개수가 많을 경우 연산 부담이 큼
+    - 3D 에디터에서 후처리하는 과정을 거쳐야 함
+- 상황에 따라서 적절한 Harris 3D 적용이 필요함
 
