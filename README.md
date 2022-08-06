@@ -83,3 +83,18 @@ Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
     - 3D 에디터에서 후처리하는 과정을 거쳐야 함
 - 상황에 따라서 적절한 Harris 3D 적용이 필요함
 
+## 6. 출처
+- Github
+    - [https://github.com/jhonmgb/HarrisInterestPoints3d](https://github.com/jhonmgb/HarrisInterestPoints3d)
+    - [https://github.com/vamshikodipaka/Interest-Point-Detection-on-3D-Meshes](https://github.com/vamshikodipaka/Interest-Point-Detection-on-3D-Meshes)
+    
+- 이미지
+    - [https://naknaklee.github.io/etc/2021/03/08/NMS/](https://naknaklee.github.io/etc/2021/03/08/NMS/)
+
+- 모델
+    - [https://sketchfab.com/3d-models/long-sidewalk2-hq-dd8f0653f8ee472387607bfc9b303886](https://sketchfab.com/3d-models/long-sidewalk2-hq-dd8f0653f8ee472387607bfc9b303886)
+    - [https://sketchfab.com/3d-models/mountain-wisteria-wisteria-brachybotrys-a9f509b34cfc4740bb01d16356184415](https://sketchfab.com/3d-models/mountain-wisteria-wisteria-brachybotrys-a9f509b34cfc4740bb01d16356184415)
+    - [https://sketchfab.com/3d-models/japanese-wisteria-wisteria-floribunda-b1d89a4c913c4ca192533bbca8a4d448](https://sketchfab.com/3d-models/japanese-wisteria-wisteria-floribunda-b1d89a4c913c4ca192533bbca8a4d448)
+    - [https://sketchfab.com/3d-models/christmas-tree-037e1ac7f30543d1b0f2635b1d1e2e1a](https://sketchfab.com/3d-models/christmas-tree-037e1ac7f30543d1b0f2635b1d1e2e1a)
+    - [https://sketchfab.com/3d-models/icicle-58fd3342c14248679d89ec35558f33c3](https://sketchfab.com/3d-models/icicle-58fd3342c14248679d89ec35558f33c3)
+
