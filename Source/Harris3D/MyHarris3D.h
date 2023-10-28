@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include <vector>
@@ -14,8 +12,6 @@
 
 using namespace std;
 
-// ================================================================================================
-
 UCLASS()
 class HARRIS3D_API AMyHarris3D : public AActor
 {
@@ -26,13 +22,6 @@ public:
 
 	// Sets default values for this actor's properties
 	AMyHarris3D();
-
-	//virtual void PostInitializeComponents() override;
-	//virtual void PostActorCreated () override;
-
-	//virtual void PostLoad () override;
-	//virtual void PostInitProperties () override;
-	//virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 	UFUNCTION(BlueprintCallable)
 	void UpdateHarris3D ();
@@ -53,20 +42,11 @@ public:
 	UPROPERTY(EditAnywhere, Category="Inspector")
 	int m_ringSize = 5;
 
-	//UPROPERTY(EditAnywhere, Category="Inspector")
-	//bool m_type = false;
-
 	UPROPERTY(EditAnywhere, Category="Inspector")
 	double m_fraction = 0.01;
 
 	UPROPERTY(EditAnywhere, Category="Inspector")
 	double m_k = 0.04;
-
-	//UPROPERTY(EditAnywhere, Category="Inspector")
-	//FColor m_color = FColor (255, 0, 0);
-
-	//UPROPERTY(EditAnywhere, Category="Inspector")
-	//double m_radius = 5;
 
 	UPROPERTY (VisibleAnywhere)
 	UStaticMeshComponent* m_pMeshCom;
@@ -80,8 +60,6 @@ public:
 	UPROPERTY(EditAnywhere, Category="Inspector")
 	double m_nms_dot = 0.5f;
 
-	//UPROPERTY(EditAnywhere, Category="Inspector")
-	//double m_bumpSink_dot = 0.0f;
 
 	UPROPERTY(EditAnywhere, Category="Inspector")
 	double m_bumpSink_dot_flat = 0.5f;
@@ -97,9 +75,6 @@ public:
 	
 	//UPROPERTY(EditAnywhere, Category="Inspector")
 	bool m_debugDraw_unselected = false;
-
-	//UPROPERTY(EditAnywhere, Category="Inspector")
-	//char* m_meshDir = ;
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -114,10 +89,13 @@ public:
 	TArray <int> vrts_postSelected;
 	TArray <FVector> vrtLocs_postSelected;
 	TArray <FVector> vrtNors_postSelected;
+
 	UPROPERTY(BlueprintReadOnly, Category="Inspector")
 	TArray <FVector> currentVrtLocs_postSelected;
+
 	UPROPERTY(BlueprintReadOnly, Category="Inspector")
 	TArray <FVector> currentVrtNors_postSelected;
+	
 	UPROPERTY(BlueprintReadOnly, Category="Inspector")
 	TArray <EVertexType> vrtTypes_postSelected;
 
@@ -161,8 +139,4 @@ public:
 
 	void InitSelectedVertexLocation ();
 	void UpdateSelectedVertexLocation ();
-
-	//UPROPERTY(BlueprintReadOnly, Category="Inspector")
-	//UFUNCTION(BlueprintCallable, Category="Inspector")
-	//EVertexType GetVertexTypeByIndex (int index);
 };

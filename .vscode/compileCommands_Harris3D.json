@@ -1,0 +1,102 @@
+[
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\.vscode\\c_cpp_properties.json",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\.vscode\\launch.json",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\.vscode\\settings.json",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\Harris3D.Build.cs",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\Harris3D.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\Harris3D.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\Harris3DCharacter.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\Harris3DCharacter.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\Harris3DGameMode.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\Harris3DGameMode.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyFace.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyFace.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyHarris3D.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyHarris3D.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyHarris3D_Spline.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyHarris3D_Spline.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyMesh.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyMesh.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyVertex.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\Source\\Harris3D\\MyVertex.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @D:\\UnrealProjects\\Harris3D_ProceduralAnimation_SplineGeneration\\.vscode\\compileCommands_Harris3D\\Harris3D.217.rsp",
+		"directory": "D:\\UnrealEngine\\UE_5.0\\Engine\\Source"
+	}
+]

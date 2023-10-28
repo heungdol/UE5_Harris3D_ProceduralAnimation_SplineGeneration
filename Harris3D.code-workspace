@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "Harris3D",
+			"path": "."
+		},
+		{
+			"name": "UE5",
+			"path": "D:\\UnrealEngine\\UE_5.0"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	}
+}

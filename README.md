@@ -11,9 +11,9 @@
 - 본 프로젝트에서는 3D Keypoint 검출 알고리즘을 활용하여 사실적인 Procedural Animation 및 Spline Generation을 구현할 수 있도록 한다.
 
 ### 1-2. 사용 엔진
-Unreal Engine 5
-- Control Rig Plugin 정식지원
-- 퀄리티 높은 렌더링 결과
+- Unreal Engine 5
+    - Control Rig Plugin 정식지원
+    - 퀄리티 높은 렌더링 결과
 
 ## 2. 알고리즘
 ### 2-1. Harris 3D
@@ -98,3 +98,41 @@ Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
     - [https://sketchfab.com/3d-models/christmas-tree-037e1ac7f30543d1b0f2635b1d1e2e1a](https://sketchfab.com/3d-models/christmas-tree-037e1ac7f30543d1b0f2635b1d1e2e1a)
     - [https://sketchfab.com/3d-models/icicle-58fd3342c14248679d89ec35558f33c3](https://sketchfab.com/3d-models/icicle-58fd3342c14248679d89ec35558f33c3)
 
+## 7. 데모
+(2023년 10월 28일 설명 추가)
+
+- 엔진: Unreal Engine 5.03
+- 용량: 약 10GB
+- 에디터: VSCODE
+
+### 7.1. Procedual Climbing Animation
+- 레벨
+    - Content/Levels/Demo_Climbing/Demo_Climb_Result.umap
+- 조작법
+    - 이동: WASD
+    - 점프: 스페이스
+    - 탈출: 스페이스 (벽을 오르고 있을 때)
+
+### 7.2. Procedural Spline Generator
+- 레벨
+    - Content/Levels/Demo_Decorating/Demo_Deco_A.umap
+    - Content/Levels/Demo_Decorating/Demo_Deco_A1.umap
+    - Content/Levels/Demo_Decorating/Demo_Deco_B.umap
+    - Content/Levels/Demo_Decorating/Demo_Deco_B1.umap
+    - Content/Levels/Demo_Decorating/Demo_Deco_C.umap
+    - Content/Levels/Demo_Decorating/Demo_Deco_D.umap
+    - Content/Levels/Demo_Decorating/Demo_Deco_E.umap
+    - Content/Levels/Demo_Decorating/Demo_Deco_F.umap
+- 사용법
+    - Content/Harris3D 경로의 BP_MyHarris3D_Spline_ 블루프린트 활용
+    - BP_MyHarris3D_Spline_의 기본 설정
+        - Keypoint를 가져올 Harris3D 블루프린트 정보
+        - 스플라인 메쉬 정보
+        - 업데이트 트리거 (M Update Click)
+    - BP_MyHarris3D_Spline_의 종류
+        - BP_MyHarris3D_Spline_ChristmasTreeLine
+        - BP_MyHarris3D_Spline_Icicle
+        - BP_MyHarris3D_Spline_Vine
+        - BP_MyHarris3D_Spline_Weed
+        - BP_MyHarris3D_Spline_Westrias
+    - BP_MyHarris3D_Spline_의 정보(프로퍼티) 설정 및 씬에서의 적절한 배치 후 업데이트 트리거 활성화
