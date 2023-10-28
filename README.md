@@ -29,7 +29,7 @@
 딥러닝 영상처리에서 중복도를 줄이기 위해 사용되는 알고리즘
 
 <img src = "https://user-images.githubusercontent.com/30585313/183238522-4c00326c-76ac-4a55-a372-ba697ed76d50.png" width="50%" height="50%">
-<img src = "https://user-images.githubusercontent.com/30585313/183238524-7aa1dfec-3fdb-40f6-a833-b8b62d8935e5.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/278822278-2a917d9b-d713-45f1-b742-7ff29e6de83d.png" width="50%" height="50%">
 Intersection of Union은 두 keypoint의 거리 및 방향의 유사성으로 대체
 
 <img src = "https://user-images.githubusercontent.com/30585313/183238514-740b4932-80a4-475f-bb3e-2a2732773d0d.png" width="50%" height="50%">
@@ -39,9 +39,12 @@ Intersection of Union은 두 keypoint의 거리 및 방향의 유사성으로 �
 - 노란선: 중복으로 필터링된 keypoint
 
 ### 2-3. Vertex Type Detection
-<img src = "https://user-images.githubusercontent.com/30585313/183240286-b7120bfb-90a9-457e-a06f-f144a86f68f9.png" width="50%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/278822273-f67617ad-6c4c-4849-bcfc-764f474921e8.png" width="60%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/278822275-87b597e4-b08d-4322-ae7b-cb979fab36aa.png" width="40%" height="50%">
+<img src = "https://user-images.githubusercontent.com/30585313/278822277-097235ec-7a73-4342-bb4e-1f77423532f4.png" width="40%" height="50%">
 Keypoint의 특성을 판단하기 위한 벡터연산
-
+<br>
+<br>
 <img src = "https://user-images.githubusercontent.com/30585313/183240288-5317a46d-c214-4b86-b57d-1fc167bbbbae.png" width="50%" height="50%">
 <img src = "https://user-images.githubusercontent.com/30585313/183240291-c7ffd0ac-57ff-4c82-b70c-0fd526423862.png" width="50%" height="50%">
 <img src = "https://user-images.githubusercontent.com/30585313/183240292-900c39c4-28ae-491d-be86-c360050b6e47.png" width="50%" height="50%">
@@ -109,15 +112,19 @@ Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
 - 에디터: VSCODE
 
 ### 7.1. Procedual Climbing Animation
-- 레벨
+- 데모 레벨
     - Content/Levels/Demo_Climbing/Demo_Climb_Result.umap
+- 블루 프린트
+    - Content/Harris3D/BP_MyHarris3D_IKEffector.uasset
+- 사용법
+    - 디테일 창에서 BP_MyHarris3D_IKEffector의 프로퍼티 세팅 후 업데이트 트리거(M Update Click) 활성화
 - 조작법
     - 이동: WASD
     - 점프: 스페이스
     - 탈출: 스페이스 (벽을 오르고 있을 때)
 
 ### 7.2. Procedural Spline Generator
-- 레벨
+- 데모 레벨
     - Content/Levels/Demo_Decorating/Demo_Deco_A.umap
     - Content/Levels/Demo_Decorating/Demo_Deco_A1.umap
     - Content/Levels/Demo_Decorating/Demo_Deco_B.umap
@@ -126,16 +133,16 @@ Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
     - Content/Levels/Demo_Decorating/Demo_Deco_D.umap
     - Content/Levels/Demo_Decorating/Demo_Deco_E.umap
     - Content/Levels/Demo_Decorating/Demo_Deco_F.umap
+- 블루 프린트
+    - Content/Harris3D/BP_MyHarris3D_Spline_ChristmasTreeLine.uasset
+    - Content/Harris3D/BP_MyHarris3D_Spline_Icicle.uasset
+    - Content/Harris3D/BP_MyHarris3D_Spline_Vine.uasset
+    - Content/Harris3D/BP_MyHarris3D_Spline_Weed.uasset
+    - Content/Harris3D/BP_MyHarris3D_Spline_Westrias.uasset
 - 사용법
-    - Content/Harris3D 경로의 BP_MyHarris3D_Spline_ 블루프린트 활용
+    - Content/Harris3D 경로의 BP_MyHarris3D_Spline_ 블루 프린트 활용
     - BP_MyHarris3D_Spline_의 기본 설정
-        - Keypoint를 가져올 Harris3D 블루프린트 정보
+        - 씬에 배치된 Harris3D 블루 프린트 정보 (Keypoint를 가져오기 위함)
         - 스플라인 메쉬 정보
         - 업데이트 트리거 (M Update Click)
-    - BP_MyHarris3D_Spline_의 종류
-        - BP_MyHarris3D_Spline_ChristmasTreeLine
-        - BP_MyHarris3D_Spline_Icicle
-        - BP_MyHarris3D_Spline_Vine
-        - BP_MyHarris3D_Spline_Weed
-        - BP_MyHarris3D_Spline_Westrias
-    - BP_MyHarris3D_Spline_의 정보(프로퍼티) 설정 및 씬에서의 적절한 배치 후 업데이트 트리거 활성화
+    - BP_MyHarris3D_Spline_의 프로퍼티 세팅 및 씬에서의 적절한 배치 후 업데이트 트리거(M Update Click) 활성화
