@@ -28,14 +28,22 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool GetIsUpdated ();
-	
+
+	UFUNCTION(BlueprintCallable)
+	const TArray <FVector>& GetKeyPointLocations () const;
+
+	UFUNCTION(BlueprintCallable)
+	const TArray <FVector>& GetKeyPointNormals () const;
+
+	UFUNCTION(BlueprintCallable)
+	const TArray <EVertexType>& GetKeyPointTypes () const;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	bool m_update_first = false;
 
-public:
 	UPROPERTY(EditAnywhere, Category="Inspector")
 	bool m_update_click = false;
 	
@@ -72,8 +80,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category="Inspector")
 	bool m_debugDraw_postSelected = true;
-	
-	//UPROPERTY(EditAnywhere, Category="Inspector")
+
 	bool m_debugDraw_unselected = false;
 	
 	// Called every frame
@@ -125,6 +132,8 @@ public:
 	MyMesh myMesh;
 	int ringSize;
 	vector<double> harrisRPoints;
+
+public:
 
 	void InitMyHarris3D ();
 

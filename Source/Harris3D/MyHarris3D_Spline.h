@@ -27,10 +27,10 @@ protected:
 
 	bool m_update_first = false;
 
+	UPROPERTY(EditAnywhere, Category="Inspector")
+	bool m_update_click = false;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(EditAnywhere, Category="Inspector")
-	bool m_update_click = false;
 };

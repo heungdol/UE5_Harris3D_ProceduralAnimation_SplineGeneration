@@ -17,15 +17,8 @@ void AMyHarris3D_Spline::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
-	cout << "spline OnConstruction" << endl;
-	
 	if (m_update_first == false || m_update_click == true)
 	{
-		if (m_update_first == false)
-			cout << "first init" << endl;
-		if (m_update_click == true)
-			cout << "click to init" << endl;
-		
 		m_update_first = true;
 		m_update_click = false;
 		

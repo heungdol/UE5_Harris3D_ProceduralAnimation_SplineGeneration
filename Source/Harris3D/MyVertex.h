@@ -25,6 +25,7 @@ public:
 	MyVertex ();
 	~MyVertex ();
 
+protected:
 	double x;
 	double y;
 	double z;
@@ -35,22 +36,24 @@ public:
 
 	EVertexType vType = EVertexType::NONE;
 
-	double GetX();
-	double GetY();
-	double GetZ();
+public:
+	const double GetX() const;
+	const double GetY() const;
+	const double GetZ() const;
 	
 	void SetX(double xval);
 	void SetY(double yval);
 	void SetZ(double zval);
 	void SetXYZ(double xval, double yval, double zval);
 
-	FVector GetVertexNormal ();
+	const FVector GetVertexNormal () const;
 	void SetVertexNormal (FVector vn);
 	
 	void AddNeighbour(int v);
-	set<int> GetNeighbours();
-	//TArray <int> GetNeighbours_TArray ();
+	const set<int>& GetNeighbours() const;
 
 	void CalculateVertexType (MyMesh* myMesh, int ringSize, float dotFlat);
-	EVertexType GetVertexType ();
+	const EVertexType GetVertexType () const;
+
+	void SetVertexIndex (int vi);
 };

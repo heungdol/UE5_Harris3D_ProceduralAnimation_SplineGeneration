@@ -99,7 +99,10 @@ Harris 3D 연산을 통한 Point를 이용하여 생성한 Line
     - [https://sketchfab.com/3d-models/icicle-58fd3342c14248679d89ec35558f33c3](https://sketchfab.com/3d-models/icicle-58fd3342c14248679d89ec35558f33c3)
 
 ## 7. 데모
-(2023년 10월 28일 설명 추가)
+- 2023년 10월 28일 수정
+    - 사용하지 않는 에셋(Megascan, Level ...)들을 제거하였습니다.
+    - 테스트 레벨 및 로딩이 오래 걸리는 레벨들을 제거하였습니다.   
+    - 가능한 프로젝트의 용량을 줄였습니다.
 
 - 엔진: Unreal Engine 5.03
 - 용량: 약 10GB

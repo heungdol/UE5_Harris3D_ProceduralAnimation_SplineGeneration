@@ -10,14 +10,15 @@ public:
 	MyFace ();
 	~MyFace ();
 
+protected:
 	int fIndex;
 	vector<int> verts;
 	
-	int GetVertex0();
-	int GetVertex1();
-	int GetVertex2();
-	vector<int> GetVertices();
+public:
+	const vector<int>& GetVertices() const;
 	
 	void AddVertex(int vval);
 	void AddVertices(int v1, int v2, int v3);
+
+	void SetFaceIndex (int fi); 
 };

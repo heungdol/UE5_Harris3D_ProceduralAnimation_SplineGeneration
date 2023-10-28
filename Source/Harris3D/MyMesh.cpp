@@ -8,8 +8,6 @@ MyMesh::MyMesh()
 
 MyMesh::MyMesh (const UStaticMeshComponent* sm)
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("11"));
-	
 	vertices.clear();
 	faces.clear();
 	overlappingVert.clear ();
@@ -45,6 +43,20 @@ MyMesh::~MyMesh()
 	
 }
 
+vector<MyFace>& MyMesh::GetFaces ()
+{
+	return faces;
+}
+
+vector<MyVertex>& MyMesh::GetVertices ()
+{
+	return vertices;
+}
+
+const vector<int>& MyMesh::GetOverlappingVertices () const
+{
+	return overlappingVert;
+}
 
 bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 {
@@ -73,15 +85,6 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 
 	isEnableModel = true;
 	
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT(""+FString::FromInt(numVertices)));
-	
- 	// UStaticMesh->Vertex FVector
-	//int count = 0;
-
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("OH: " + FString::FromInt(verts [0].X)));
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("OH: " + FString::FromInt(verts [0].Y)));
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("OH: " + FString::FromInt(verts [0].Z)));
-	
 	for(int i = 0; i < numVertices; i++)
 	{
 		double xc, yc, zc;
@@ -91,27 +94,22 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 		zc = verts [i].Z;
 
 		MyVertex v;
-		v.vIndex=i;
+		v.SetVertexIndex (i);
 		v.SetXYZ(xc,yc,zc);
 		v.SetVertexNormal(nors [i]);
 
 		overlappingVert.push_back(i);
-		//count++;
 		
 		// 중복 버텍스 제거 위함
 		// 처음부터 순회하면서 같은 위치에 있는 것을 중복으로 판단한다
-		// Mesh를 읽는 엔진 구조상 아래와 같은 번거로운 과정을 거친다
-		// TODO 좀 더 효율적인 알고리즘을 생각해볼 것
 		for (int j = 0; j < overlappingVert.size()-1; j++)
 		{
 			// 거리로 판단
-			float dist = FVector::Dist(verts[i], verts[j]);
-			if (dist < 0.01f)
+			float dist = FVector::DistSquared(verts[i], verts[j]);
+			if (dist < VERTEX_OVERLAP_DISTANCE_SQ)
 			{
 				overlappingVert [i] = j;
-				v.vIndex=j;
-				//cout << "overlapping" << endl;
-				//count--;
+				v.SetVertexIndex (j);
 				break;
 			}
 		}
@@ -119,10 +117,6 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 		vertices.push_back(v);
 	}
 
-	//G//Engine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("OH: " + FString::FromInt(vertices[0].GetX())));
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("OH: " + FString::FromInt(vertices[0].GetY())));
-	///GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("OH: " + FString::FromInt(vertices[0].GetZ())));
-	
 	// UStaticMesh->Face Vertex 3개 묶음
 	for(int i = 0, fi = 0;  i < numFaces; i+=3, fi++)
 	{
@@ -133,8 +127,8 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 		vt3 = overlappingVert [tris[i+2]];
 
 		MyFace f;
-		f.fIndex=fi;
-		f.AddVertices(vt1,vt2,vt3);
+		f.SetFaceIndex (fi);
+		f.AddVertices (vt1,vt2,vt3);
 		
 		//create 1st ring neighbourhood, credit to source code
 		vertices[vt1].AddNeighbour(vt2);
@@ -147,7 +141,6 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 		vertices[vt3].AddNeighbour(vt2);
 
 		faces.push_back(f);
-
 	}
 
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("true"));
@@ -159,7 +152,7 @@ FVector MyMesh::GetVertexLocByIndex (int ii)
 	if (vertices.size() <= ii)
 		return FVector (0, 0, 0);
 
-	return FVector ( vertices [ii].x,  vertices [ii].y,  vertices [ii].z);
+	return FVector ( vertices [ii].GetX (),  vertices [ii].GetY (),  vertices [ii].GetZ ());
 }
 
 FVector MyMesh::GetVertexNorByIndex (int ii)
@@ -175,10 +168,6 @@ set<int> MyMesh::CalculateNeighbourhood_Ring(int indexVertex, int ringSize)
 {
 	set<int> s_prev, s_current, newring, s_total, s_ring, temp;
 	set<int> nbhood = vertices[indexVertex].GetNeighbours();
-
-	//set<int>::iterator iiii = nbhood.begin();
-	//for (; indexVertex == 0 && iiii != nbhood.end (); iiii++)
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT(""+ FString::FromInt(*iiii)));
 
 	s_prev.insert(indexVertex); //insert the index of the vertex
 	s_current.insert(nbhood.begin(), nbhood.end()); //insert the neighbourhood at ring 1
@@ -219,7 +208,7 @@ set<int> MyMesh::CalculateNeighbourhood_Ring(int indexVertex, int ringSize)
 	return s_total;
 }
 
-bool MyMesh::GetIsEnableModel()
+bool MyMesh::GetIsEnableModel() const
 {
 	return isEnableModel;
 }

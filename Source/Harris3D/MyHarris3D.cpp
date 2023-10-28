@@ -18,46 +18,7 @@
 using namespace std;
 using namespace ECollisionEnabled;
 
-// 에디터에서 수행할 수 있도록 설정
-/*void AMyHarris3D::PostInitializeComponents ()
-{
-	Super::PostInitializeComponents();
-	
-	cout << "function called" << endl;
-}*/
-
-/*
-
-void AMyHarris3D::PostActorCreated ()
-{
-	Super::PostActorCreated ();
-
-	cout << "function called created" << endl;
-}*/
-
-/*void AMyHarris3D::PostLoad ()
-{
-	Super::PostLoad ();
-	cout << "function called loaded" << endl;
-	
-	InitFlowChart ();
-}
-
-void AMyHarris3D::PostInitProperties ()
-{
-	Super::PostInitProperties ();
-	cout << "function called init" << endl;
-	
-	InitFlowChart ();
-}
-
-void AMyHarris3D::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-{
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-	cout << "function called modify" << endl;
-	
-	InitFlowChart ();
-}*/
+#define HARRIS_POINT_MAX 1000
 
 // Construction
 void AMyHarris3D::OnConstruction(const FTransform& Transform)
@@ -67,12 +28,6 @@ void AMyHarris3D::OnConstruction(const FTransform& Transform)
 	// 첫 실행 혹은 에디터에서 갱신 bool를 활성화할 시
 	if (m_update_first == false || m_update_click == true)
 	{
-		// test
-		/*if (m_update_first == false)
-			cout << "first init" << endl;
-		if (m_update_click == true)
-			cout << "click to init" << endl;*/
-		
 		m_update_first = true;
 		m_update_click = false;
 		
@@ -147,11 +102,6 @@ void AMyHarris3D::UpdateHarris3D ()
 void AMyHarris3D::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	//InitFlowChart ();
-
-	//InitSelectedVertexLocation ();
-	//UpdateSelectedVertexLocation();
 
 	UpdateSelectedVertexLocation();
 }
@@ -164,16 +114,12 @@ void AMyHarris3D::Tick(float DeltaTime)
 
 void AMyHarris3D::InitMyHarris3D()
 {
-	//AMyHarris3D::myMesh = msh;
-	//AMyHarris3D::typeSelection = (int)m_type;
-
 	// 링 사이즈
 	AMyHarris3D::ringSize = m_ringSize;
 
 	// 전체 버택스 비율로 내어 선택할 개수를 구할 때 사용되는 상수
 	AMyHarris3D::fraction_constant = m_fraction;
 
-	
 	AMyHarris3D::k_parameter = m_k;
 }
 
@@ -181,17 +127,16 @@ void AMyHarris3D::InitMyHarris3D()
 //calculates the Harris reponse of each vertex
 void AMyHarris3D::CalculateHarrisResponse()
 {
-	int vertexSize = myMesh.vertices.size();
+	int vertexSize = myMesh.GetVertices ().size();
 	
 	for (int indexVertex = 0; indexVertex < vertexSize; indexVertex++)
 	{
 		//vertexSize
 
 		// 중복인 경우 계산하지 않고 컨티뉴
-		if (indexVertex != myMesh.overlappingVert[indexVertex])
+		if (indexVertex != myMesh.GetOverlappingVertices ()[indexVertex])
 		{
-			//harrisRPoints.push_back(harrisRPoints[myMesh.overlappingVert[indexVertex]]);
-			harrisRPoints.push_back(1000);
+			harrisRPoints.push_back(HARRIS_POINT_MAX);
 			continue;
 		}
 
@@ -206,15 +151,15 @@ void AMyHarris3D::CalculateHarrisResponse()
 		for (itr = set_nhd.begin(); itr != set_nhd.end(); ++itr)
 		{
 			//get the x,y,z coordinates
-			x_coord.push_back(myMesh.vertices[*itr].GetX());
-			y_coord.push_back(myMesh.vertices[*itr].GetY());
-			z_coord.push_back(myMesh.vertices[*itr].GetZ());
+			x_coord.push_back(myMesh.GetVertices ()[*itr].GetX());
+			y_coord.push_back(myMesh.GetVertices ()[*itr].GetY());
+			z_coord.push_back(myMesh.GetVertices ()[*itr].GetZ());
 		}
 
 		//adding the vertex itself to the set, the last element
-		x_coord.push_back(myMesh.vertices[indexVertex].GetX());
-		y_coord.push_back(myMesh.vertices[indexVertex].GetY());
-		z_coord.push_back(myMesh.vertices[indexVertex].GetZ());
+		x_coord.push_back(myMesh.GetVertices ()[indexVertex].GetX());
+		y_coord.push_back(myMesh.GetVertices ()[indexVertex].GetY());
+		z_coord.push_back(myMesh.GetVertices ()[indexVertex].GetZ());
 
 
 		//calculate centroid of the neighbourhood Vk(v)
@@ -263,7 +208,6 @@ void AMyHarris3D::CalculateHarrisResponse()
 		tmp = principal_comps.col(0);
 		principal_comps.col(0) = principal_comps.col(2);
 		principal_comps.col(2) = tmp;
-
 
 		//set of points is rotated so that the normal of the fitting plane is the z-axis
 		Eigen::MatrixXd rotated_points(3, nhd_size);
@@ -331,7 +275,7 @@ void AMyHarris3D::CalculateHarrisResponse()
 	for (int nV = 0; nV < vertexSize; nV++)
 	{
 		// 중복 패스
-		if (nV != myMesh.overlappingVert[nV])
+		if (nV != myMesh.GetOverlappingVertices ()[nV])
 		{
 			continue;
 		}
@@ -411,9 +355,6 @@ void AMyHarris3D::CalculateNMS ()
 	
 	while (vrts_selected.size() > 1)
 	{
-		//int index_current = 0;
-		//int index_best = 0;
-		
 		int vrt_best = vrts_selected[0];
 		double harris_best = harrisRPoints[vrts_selected[0]];
 
@@ -425,11 +366,7 @@ void AMyHarris3D::CalculateNMS ()
 			{
 				vrt_best = *iter;
 				harris_best = harrisRPoints[*iter];
-				
-				//index_best = index_current;
 			}
-
-			//index_current++;
 		}
 
 		// 베스트 추가
@@ -474,10 +411,7 @@ void AMyHarris3D::CalculateNMS ()
 		iter = filtering.begin();
 		for (; iter != filtering.end(); ++iter)
 			vrts_unselected.Remove(*iter);
-		
-		//vrts_unselected.insert(vrts_unselected.end(), filtering.begin(), filtering.end());
 
-		
 		for (int index = 0; index < filtering.size(); index++)
 		{
 			vrts_selected.erase(find (vrts_selected.begin(), vrts_selected.end(), filtering[index]));
@@ -492,14 +426,11 @@ void AMyHarris3D::CalculateNMS ()
 	}
 	
 	// 오버랩 확인
-	for (int i = 0; i < myMesh.overlappingVert.size(); i++)
+	for (int i = 0; i < myMesh.GetOverlappingVertices ().size(); i++)
 	{
-		if (i != myMesh.overlappingVert[i])
+		if (i != myMesh.GetOverlappingVertices ()[i])
 			vrts_overlapped.Add(i);
 	}
-
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Total Vertex Number: " + FString::FromInt(myMesh.vertices.size())));
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Overlapped Vertex Number: " + FString::FromInt(vrts_overlapped.Num())));
 }
 
 void AMyHarris3D::CalculateVertexType()
@@ -507,7 +438,8 @@ void AMyHarris3D::CalculateVertexType()
 	// 선택된 keypoint 돌출 / 함몰 계산
 	for (int index = 0; index < vrts_postSelected.Num(); index++)
 	{
-		myMesh.vertices[vrts_postSelected[index]].CalculateVertexType(&myMesh, m_bumpSink_ring, m_bumpSink_dot_flat);
+		MyVertex& mv = myMesh.GetVertices ()[vrts_postSelected[index]];
+		mv.CalculateVertexType(&myMesh, m_bumpSink_ring, m_bumpSink_dot_flat);
 	}
 }
 
@@ -515,9 +447,9 @@ void AMyHarris3D::CalculateVertexType()
 //To check whether a vertex is a local maximum or not
 bool AMyHarris3D::GetIsLocalMaxima(unsigned int vertexIndex)
 {
-	set<int> nhd = myMesh.vertices[vertexIndex].GetNeighbours();
 	set<int>::iterator itrr;
-	for (itrr = nhd.begin(); itrr != nhd.end(); ++itrr)
+	for (itrr = myMesh.GetVertices ()[vertexIndex].GetNeighbours().begin()
+	; itrr != myMesh.GetVertices ()[vertexIndex].GetNeighbours().end(); ++itrr)
 	{
 		if (harrisRPoints[vertexIndex] < harrisRPoints[*itrr])
 		{
@@ -542,7 +474,7 @@ void AMyHarris3D::InitSelectedVertexLocation()
 		vrtNors_postSelected.Push (myMesh.GetVertexNorByIndex (vrts_postSelected[i]));
 		currentVrtNors_postSelected.Push (myMesh.GetVertexNorByIndex (vrts_postSelected[i]));
 
-		vrtTypes_postSelected.Push (myMesh.vertices[vrts_postSelected[i]].GetVertexType());
+		vrtTypes_postSelected.Push (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType());
 	}
 
 	for (int i = 0; i < vrts_unselected.Num(); i++)
@@ -554,19 +486,8 @@ void AMyHarris3D::InitSelectedVertexLocation()
 		currentVrtNors_unselected.Push (myMesh.GetVertexNorByIndex (vrts_unselected[i]));
 	}
 
-	/*for (int i = 0; i < vrts_overlapped.Num(); i++)
-	{
-		vrtLocs_overlapped.Push(myMesh.GetVertexLocByIndex(vrts_overlapped[i]));
-		currentVrtLocs_overlapped.Push(myMesh.GetVertexLocByIndex(vrts_overlapped[i]));
-		
-		vrtNors_overlapped.Push (myMesh.GetVertexNorByIndex (vrts_overlapped[i]));
-		currentVrtNors_overlapped.Push (myMesh.GetVertexNorByIndex (vrts_overlapped[i]));
-	}*/
-
 	for (int i = 0; i < vrtLocs_postSelected.Num(); i++)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, TEXT("OHa"));
-
 		FVector offset = vrtLocs_postSelected[i];
 		offset *= actorScale;
 		offset = actorRotation.RotateVector(offset);
@@ -577,8 +498,6 @@ void AMyHarris3D::InitSelectedVertexLocation()
 
 	for (int i = 0; i < vrtLocs_unselected.Num(); i++)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, TEXT("OHa"));
-
 		FVector offset = vrtLocs_unselected[i];
 		offset *= actorScale;
 		offset = actorRotation.RotateVector(offset);
@@ -586,136 +505,71 @@ void AMyHarris3D::InitSelectedVertexLocation()
 		currentVrtLocs_unselected [i] = actorLocation + offset;
 		currentVrtNors_unselected [i] = actorRotation.RotateVector(vrtNors_unselected [i]);
 	}
-
-	/*for (int i = 0; i < selectedVrts_clustering.size(); i++)
-	{
-		selectedVrtLocs_clustering.Push(myMesh.GetVertexLocByIndex(selectedVrts_clustering[i]));
-		currentSelectedVrtLocs_clustering.Push(myMesh.GetVertexLocByIndex(selectedVrts_clustering[i]));
-
-		selectedVrtNors_clustering.Push (myMesh.GetVertexNorByIndex (selectedVrts_clustering[i]));
-		currentSelectedVrtNors_clustering.Push (myMesh.GetVertexNorByIndex (selectedVrts_clustering[i]));
-	}*/
-
 }
 
 
 void AMyHarris3D::UpdateSelectedVertexLocation()
 {
-	//cout << vrtLocs_postSelected.Num() << endl;
-	
 	FTimerHandle debugDrawWaitHandle;
 	
 	float WaitTime = 0.1; //시간 설정
-	//bool  firstInit =  false;
 
 	if (GetWorld())
 	GetWorld()->GetTimerManager().SetTimer(debugDrawWaitHandle, FTimerDelegate::CreateLambda([&]()
 	{
-		//if (firstInit == true)
-		//{
-			for (int i = 0; i < vrtLocs_postSelected.Num(); i++)
-			{
-				//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, TEXT("OHa"));
-
-				FVector offset = vrtLocs_postSelected[i];
-				offset *= actorScale;
-				offset = actorRotation.RotateVector(offset);
-				
-				currentVrtLocs_postSelected [i] = actorLocation + offset;
-				currentVrtNors_postSelected [i] = actorRotation.RotateVector(vrtNors_postSelected [i]);
-
-				if (m_debugDraw == true && m_debugDraw_postSelected == true)
-				{
-					if (myMesh.vertices[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_BUMP)
-						DrawDebugLine(GetWorld()
-						, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-						, FColorList::Red, false, 0.1, 0, 1);
-					else if (myMesh.vertices[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_SINK)
-						DrawDebugLine(GetWorld()
-						, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-						, FColorList::Green, false, 0.1, 0, 1);
-					else if (myMesh.vertices[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_FLAT)
-						DrawDebugLine(GetWorld()
-						, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-						, FColorList::Orange, false, 0.1, 0, 1);
-					else
-						DrawDebugLine(GetWorld()
-						, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-						, FColorList::Black, false, 0.1, 0, 1);
-				}
-
-			}
-
-			for (int i = 0; i < vrtLocs_unselected.Num(); i++)
-			{
-				//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, TEXT("OHa"));
-
-				FVector offset = vrtLocs_unselected[i];
-				offset *= actorScale;
-				offset = actorRotation.RotateVector(offset);
-				
-				currentVrtLocs_unselected [i] = actorLocation + offset;
-				currentVrtNors_unselected [i] = actorRotation.RotateVector(vrtNors_unselected [i]);
-
-				if (m_debugDraw == true && m_debugDraw_unselected == true)
-					DrawDebugLine(GetWorld()
-						, currentVrtLocs_unselected[i], currentVrtLocs_unselected[i]+4*currentVrtNors_unselected[i]
-						, FColorList::Yellow, false, 0.1, 0, 1);
-			}
-
-			/*for (int i = 0; i < vrts_overlapped.size(); i++)
-			{
-				//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, TEXT("OHa"));
-
-				FVector offset = vrtLocs_overlapped[i];
-				offset *= actorScale;
-				offset = actorRotation.RotateVector(offset);
-				
-				currentVrtLocs_overlapped [i] = actorLocation + offset;
-				currentVrtNors_overlapped [i] = actorRotation.RotateVector(vrtNors_overlapped [i]);
-
-				//if (m_debugDraw == true)
-					DrawDebugLine(GetWorld()
-						, currentVrtLocs_overlapped[i], currentVrtLocs_overlapped[i]+10*currentVrtNors_overlapped[i]
-						, FColorList::Blue, false, 0.1, 0, 1);
-			}*/
-
-			/*for (int i = 0; i < selectedVrtLocs_clustering.Num(); i++)
-			{
-				//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Yellow, TEXT("OHa"));
-
-				FVector offset = selectedVrtLocs_clustering[i];
-				offset *= actorScale;
-				offset = actorRotation.RotateVector(offset);
-
-				currentSelectedVrtLocs_clustering [i] = actorLocation + offset;
-				currentSelectedVrtNors_clustering [i] = actorRotation.RotateVector(selectedVrtNors_clustering [i]);
+		for (int i = 0; i < vrtLocs_postSelected.Num(); i++)
+		{
+			FVector offset = vrtLocs_postSelected[i];
+			offset *= actorScale;
+			offset = actorRotation.RotateVector(offset);
 			
+			currentVrtLocs_postSelected [i] = actorLocation + offset;
+			currentVrtNors_postSelected [i] = actorRotation.RotateVector(vrtNors_postSelected [i]);
 
-				//if (m_debugDraw == true)
-				//DrawDebugSphere(GetWorld(),  currentSelectedVrtLocs_clustering [i], m_radius, 8, FColorList::Blue, false, .1f, 0, 01);
-			}*/
+			if (m_debugDraw == true && m_debugDraw_postSelected == true)
+			{
+				if (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_BUMP)
+					DrawDebugLine(GetWorld()
+					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
+					, FColorList::Red, false, 0.1, 0, 1);
+				else if (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_SINK)
+					DrawDebugLine(GetWorld()
+					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
+					, FColorList::Green, false, 0.1, 0, 1);
+				else if (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_FLAT)
+					DrawDebugLine(GetWorld()
+					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
+					, FColorList::Orange, false, 0.1, 0, 1);
+				else
+					DrawDebugLine(GetWorld()
+					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
+					, FColorList::Black, false, 0.1, 0, 1);
+			}
 
-			actorLocation = GetActorLocation();
-			actorScale = GetActorScale();
-			actorRotation = GetActorRotation();
-		//}/
-		//else
-		//{
-		//	firstInit = true;
-		//}
+		}
+
+		for (int i = 0; i < vrtLocs_unselected.Num(); i++)
+		{
+			FVector offset = vrtLocs_unselected[i];
+			offset *= actorScale;
+			offset = actorRotation.RotateVector(offset);
+			
+			currentVrtLocs_unselected [i] = actorLocation + offset;
+			currentVrtNors_unselected [i] = actorRotation.RotateVector(vrtNors_unselected [i]);
+
+			if (m_debugDraw == true && m_debugDraw_unselected == true)
+				DrawDebugLine(GetWorld()
+					, currentVrtLocs_unselected[i], currentVrtLocs_unselected[i]+4*currentVrtNors_unselected[i]
+					, FColorList::Yellow, false, 0.1, 0, 1);
+		}
+
+		actorLocation = GetActorLocation();
+		actorScale = GetActorScale();
+		actorRotation = GetActorRotation();
 
 		GetWorld()->GetTimerManager().ClearTimer(debugDrawWaitHandle);
 	}), WaitTime, true); //반복도 여기서 추가 변수를 선언해 설정가능
 }
-
-/*EVertexType AMyHarris3D::GetVertexTypeByIndex(int index)
-{
-	if (index < 0 || index >= vrts_postSelected.Num())
-		return EVertexType::NONE;
-
-	return vrtTypes_postSelected [index];
-}*/
 
 FVector AMyHarris3D::GetVertexLocationByIndex (int i)
 {
@@ -734,3 +588,17 @@ FVector AMyHarris3D::GetVertexNormalByIndex (int i)
 	return  currentVrtNors_postSelected [i];
 }
 	
+const TArray <FVector>& AMyHarris3D::GetKeyPointLocations () const
+{
+	return currentVrtLocs_postSelected;
+}
+
+const TArray <FVector>& AMyHarris3D::GetKeyPointNormals () const
+{
+	return currentVrtNors_postSelected;
+}
+
+const TArray <EVertexType>& AMyHarris3D::GetKeyPointTypes () const
+{
+	return vrtTypes_postSelected;
+}
