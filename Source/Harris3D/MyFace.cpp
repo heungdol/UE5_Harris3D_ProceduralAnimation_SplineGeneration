@@ -32,3 +32,8 @@ void MyFace::SetFaceIndex (int fi)
 {
 	fIndex = fi;
 }
+
+const int& MyFace::GetFaceIndex () const
+{
+	return fIndex;
+}

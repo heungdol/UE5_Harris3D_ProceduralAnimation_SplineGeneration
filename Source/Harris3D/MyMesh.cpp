@@ -69,8 +69,8 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 	TArray <FVector2D> uvs;
 	TArray<FProcMeshTangent> tans;
 
-	// TODO UV Map을 고려하지 않고 Vertex 및 Face를 찾을 수 있는 방법을 알게되면 적용시키는게 좋을 것 같다.
-	// UV Map의 Vertex 중복문제 때문에 자원 낭비가 발생한다.
+	// 내장된 Unreal 함수를 통해 Vertex, Face, Normal, UV, Tangent의 Mesh 정보를 가져옴
+	// 여기서 uvs와 tans는 활용하지 않음
 	UKismetProceduralMeshLibrary::GetSectionFromStaticMesh(sm->GetStaticMesh(), 0, 0, verts, tris, nors, uvs, tans);
 	
 	numVertices = verts.Num();
@@ -87,24 +87,25 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 	
 	for(int i = 0; i < numVertices; i++)
 	{
-		double xc, yc, zc;
-
-		xc = verts [i].X;
-		yc = verts [i].Y;
-		zc = verts [i].Z;
+		// Vertex Location 
+		// double xc, yc, zc;
+		// xc = verts [i].X;
+		// yc = verts [i].Y;
+		// zc = verts [i].Z;
 
 		MyVertex v;
 		v.SetVertexIndex (i);
-		v.SetXYZ(xc,yc,zc);
+		v.SetXYZ(verts [i]);
 		v.SetVertexNormal(nors [i]);
 
+		// Overlapped Vertex 판단
 		overlappingVert.push_back(i);
 		
-		// 중복 버텍스 제거 위함
-		// 처음부터 순회하면서 같은 위치에 있는 것을 중복으로 판단한다
+		// 중복 Vertex를 제거하기 위함
+		// 처음부터 순회하면서 같은 위치에 있는 것을 중복으로 판단
 		for (int j = 0; j < overlappingVert.size()-1; j++)
 		{
-			// 거리로 판단
+			// 거리의 제곱으로 판단
 			float dist = FVector::DistSquared(verts[i], verts[j]);
 			if (dist < VERTEX_OVERLAP_DISTANCE_SQ)
 			{
@@ -122,6 +123,7 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 	{
 		int vt1, vt2, vt3;
 		
+		// 중복을 방지하기 위해, 같은 Location의 가장 첫 번째의 인덱스를 가지고 옴
 		vt1 = overlappingVert [tris[i+0]];
 		vt2 = overlappingVert [tris[i+1]];
 		vt3 = overlappingVert [tris[i+2]];
@@ -131,6 +133,7 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 		f.AddVertices (vt1,vt2,vt3);
 		
 		//create 1st ring neighbourhood, credit to source code
+		// Face를 구성하고 있는 Vertex들을 서로 간 이웃으로 설정
 		vertices[vt1].AddNeighbour(vt2);
 		vertices[vt1].AddNeighbour(vt3);
 		
@@ -143,7 +146,6 @@ bool MyMesh::ReadFile(const UStaticMeshComponent* sm)
 		faces.push_back(f);
 	}
 
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("true"));
 	return true;
 }
 
@@ -208,7 +210,7 @@ set<int> MyMesh::CalculateNeighbourhood_Ring(int indexVertex, int ringSize)
 	return s_total;
 }
 
-bool MyMesh::GetIsEnableModel() const
+const bool& MyMesh::GetIsEnableModel() const
 {
 	return isEnableModel;
 }

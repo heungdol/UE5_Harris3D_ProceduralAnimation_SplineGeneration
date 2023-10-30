@@ -18,8 +18,6 @@
 using namespace std;
 using namespace ECollisionEnabled;
 
-#define HARRIS_POINT_MAX 1000
-
 // Construction
 void AMyHarris3D::OnConstruction(const FTransform& Transform)
 {
@@ -43,9 +41,10 @@ bool AMyHarris3D::GetIsUpdated()
 // Sets default values
 AMyHarris3D::AMyHarris3D()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// 해당 Actor가 Tick를 사용하도록 설정
 	PrimaryActorTick.bCanEverTick = true;
 
+	// StaticMesh 컴포넌트 생성 후 부착
 	m_pMeshCom = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));
 	RootComponent = m_pMeshCom;
 }
@@ -66,34 +65,38 @@ void AMyHarris3D::UpdateHarris3D ()
 	// 콜리젼 설정
 	m_pMeshCom->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
+	// 사용할 배열 초기화
 	vrts_selected.clear();
-	
 	vrts_postSelected.Empty();
+	
 	vrtLocs_postSelected.Empty();
 	vrtNors_postSelected.Empty();
-	currentVrtLocs_postSelected.Empty();
-	currentVrtNors_postSelected.Empty();
 	vrtTypes_postSelected.Empty();
 
-	vrts_unselected.Empty();
-	vrtLocs_unselected.Empty();
-	vrtNors_unselected.Empty();
-	currentVrtLocs_unselected.Empty();
-	currentVrtNors_unselected.Empty();
+	currentVrtLocs_postSelected.Empty();
+	currentVrtNors_postSelected.Empty();
 
-	vrts_overlapped.Empty();
-	vrtLocs_overlapped.Empty();
-	vrtNors_overlapped.Empty();
-	currentVrtLocs_overlapped.Empty();
-	currentVrtNors_overlapped.Empty();
+	// vrts_unselected.Empty();
+	// vrtLocs_unselected.Empty();
+	// vrtNors_unselected.Empty();
+	// currentVrtLocs_unselected.Empty();
+	// currentVrtNors_unselected.Empty();
+
+	// vrts_overlapped.Empty();
+	// vrtLocs_overlapped.Empty();
+	// vrtNors_overlapped.Empty();
+	// currentVrtLocs_overlapped.Empty();
+	// currentVrtNors_overlapped.Empty();
 
 	harrisRPoints.clear();
 
+	// Harris3D -> NMS -> VertexType 순으로 수행
 	InitMyHarris3D();
 	CalculateHarrisResponse();
 	CalculateNMS ();
 	CalculateVertexType ();
 
+	// 계산된 Keypoint들을 World에서 활용할 수 있도록 가공 후 Debug 출력
 	InitSelectedVertexLocation ();
 	UpdateSelectedVertexLocation();
 }
@@ -120,10 +123,11 @@ void AMyHarris3D::InitMyHarris3D()
 	// 전체 버택스 비율로 내어 선택할 개수를 구할 때 사용되는 상수
 	AMyHarris3D::fraction_constant = m_fraction;
 
+	// 계산에 사용되는 상수
 	AMyHarris3D::k_parameter = m_k;
 }
 
-
+// Github에서 공개된 소스코드 활용
 //calculates the Harris reponse of each vertex
 void AMyHarris3D::CalculateHarrisResponse()
 {
@@ -131,17 +135,16 @@ void AMyHarris3D::CalculateHarrisResponse()
 	
 	for (int indexVertex = 0; indexVertex < vertexSize; indexVertex++)
 	{
-		//vertexSize
-
 		// 중복인 경우 계산하지 않고 컨티뉴
 		if (indexVertex != myMesh.GetOverlappingVertices ()[indexVertex])
 		{
-			harrisRPoints.push_back(HARRIS_POINT_MAX);
+			// 더미 값을 넣음
+			harrisRPoints.push_back(HARRIS_POINT_MIN);
 			continue;
 		}
 
-		vector<double> x_coord, y_coord, z_coord;
 		//caculate the neighbourhood
+		vector<double> x_coord, y_coord, z_coord;
 		set<int> set_nhd;
 
 		//calculate the k rings neighbourhood of each vertex
@@ -160,7 +163,6 @@ void AMyHarris3D::CalculateHarrisResponse()
 		x_coord.push_back(myMesh.GetVertices ()[indexVertex].GetX());
 		y_coord.push_back(myMesh.GetVertices ()[indexVertex].GetY());
 		z_coord.push_back(myMesh.GetVertices ()[indexVertex].GetZ());
-
 
 		//calculate centroid of the neighbourhood Vk(v)
 		int nhd_size = x_coord.size();
@@ -270,7 +272,8 @@ void AMyHarris3D::CalculateHarrisResponse()
 
 	//Pre-selection of the interest points
 	//preserve the vertices which are local maximum
-	// 주변 이웃한 버텍스 수가 가장 많은 버텍스
+	
+	// 선 선택된 Keypoint들의 모음
 	vector<int> preselected;
 	for (int nV = 0; nV < vertexSize; nV++)
 	{
@@ -280,12 +283,14 @@ void AMyHarris3D::CalculateHarrisResponse()
 			continue;
 		}
 		
+		// 주변 이웃로부터 가장 높은 harris 수치를 가지면
 		bool localMaxima = GetIsLocalMaxima(nV);
 		if (localMaxima == true)
 		{
 			preselected.push_back(nV);
 		}
 	}
+
 	//sort the preselected vertices, decreasing order
 	sort(preselected.rbegin(), preselected.rend());
 	{
@@ -309,7 +314,7 @@ void AMyHarris3D::CalculateHarrisResponse()
 			preSelectedHarrisValues(iPre) = harrisRPoints[preSelectedVertexes(iPre)];
 		}
 
-		vector<int> _selectedVertices;
+		// vector<int> _selectedVertices;
 
 		double maxi(0);
 		for (int iIP = 0; iIP < preSelectedVertexes.size(); iIP++)
@@ -319,7 +324,7 @@ void AMyHarris3D::CalculateHarrisResponse()
 			{
 				if (abs(maxi - preSelectedHarrisValues(i)) < 0.00001)
 				{
-					_selectedVertices.push_back(preSelectedVertexes(i));
+					vrts_selected.push_back(preSelectedVertexes(i));
 					preSelectedHarrisValues(i) = 0;
 					break;
 				}
@@ -329,7 +334,7 @@ void AMyHarris3D::CalculateHarrisResponse()
 		//sort the preselected vertices, decreasing order
 		sort(preselected.rbegin(), preselected.rend());
 
-		vrts_selected = _selectedVertices;
+		// vrts_selected = _selectedVertices;
 	}
 
 	// 정렬 및 중복 제거
@@ -350,8 +355,8 @@ void AMyHarris3D::CalculateNMS ()
 
 	// 초기화
 	vrts_postSelected.Empty();
-	vrts_unselected.Empty();
-	vrts_overlapped.Empty();
+	// vrts_unselected.Empty();
+	// vrts_overlapped.Empty();
 	
 	while (vrts_selected.size() > 1)
 	{
@@ -375,18 +380,18 @@ void AMyHarris3D::CalculateNMS ()
 		// 베스트 제외
 		vrts_selected.erase(find (vrts_selected.begin(), vrts_selected.end(), vrt_best));
 		
-		// 필터링
-		vector <int> filtering;
-		
+		// 베스트 Keypoint Location 및 Normal 
 		FVector loc_best = myMesh.GetVertexLocByIndex(vrt_best);
 		FVector nor_best = myMesh.GetVertexNorByIndex(vrt_best);
 
+		// 필터링
+		vector <int> filtering;
 		iter = vrts_selected.begin();
 		for (; iter != vrts_selected.end(); ++iter)
 		{
-			if (vrt_best ==  *iter)
+			// 혹시나 베스트 Keypoint가 존재했을 경우 조건 추가
+			if (vrt_best == *iter)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("No Way"));
 				filtering.push_back(*iter);
 				continue;
 			}
@@ -408,29 +413,28 @@ void AMyHarris3D::CalculateNMS ()
 			continue;
 
 		// 필터링 제외
-		iter = filtering.begin();
-		for (; iter != filtering.end(); ++iter)
-			vrts_unselected.Remove(*iter);
+		// iter = filtering.begin();
+		// for (; iter != filtering.end(); ++iter)
+		// 	vrts_unselected.Remove(*iter);
 
 		for (int index = 0; index < filtering.size(); index++)
 		{
 			vrts_selected.erase(find (vrts_selected.begin(), vrts_selected.end(), filtering[index]));
 		}
-
 	}
 
-	// 남은거 마저 넣기
+	// 남은 Keypoint 넣고 마무리
 	for (int index = 0; index < vrts_selected.size(); index++)
 	{
 		vrts_postSelected.Add(vrts_selected[index]);
 	}
 	
 	// 오버랩 확인
-	for (int i = 0; i < myMesh.GetOverlappingVertices ().size(); i++)
-	{
-		if (i != myMesh.GetOverlappingVertices ()[i])
-			vrts_overlapped.Add(i);
-	}
+	// for (int i = 0; i < myMesh.GetOverlappingVertices ().size(); i++)
+	// {
+	// 	if (i != myMesh.GetOverlappingVertices ()[i])
+	// 		vrts_overlapped.Add(i);
+	// }
 }
 
 void AMyHarris3D::CalculateVertexType()
@@ -461,11 +465,12 @@ bool AMyHarris3D::GetIsLocalMaxima(unsigned int vertexIndex)
 
 void AMyHarris3D::InitSelectedVertexLocation()
 {
+	// World 상의 Actor Transform
 	actorLocation = GetActorLocation();
 	actorScale = GetActorScale();
 	actorRotation = GetActorRotation();
 	
-	// 선택된 점 위치 확인
+	// 선택된 Keypoint Location 및 Normal 저장
 	for (int i = 0; i < vrts_postSelected.Num(); i++)
 	{
 		vrtLocs_postSelected.Push(myMesh.GetVertexLocByIndex(vrts_postSelected[i]));
@@ -477,15 +482,16 @@ void AMyHarris3D::InitSelectedVertexLocation()
 		vrtTypes_postSelected.Push (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType());
 	}
 
-	for (int i = 0; i < vrts_unselected.Num(); i++)
-	{
-		vrtLocs_unselected.Push(myMesh.GetVertexLocByIndex(vrts_unselected[i]));
-		currentVrtLocs_unselected.Push(myMesh.GetVertexLocByIndex(vrts_unselected[i]));
+	// for (int i = 0; i < vrts_unselected.Num(); i++)
+	// {
+	// 	vrtLocs_unselected.Push(myMesh.GetVertexLocByIndex(vrts_unselected[i]));
+	// 	currentVrtLocs_unselected.Push(myMesh.GetVertexLocByIndex(vrts_unselected[i]));
 		
-		vrtNors_unselected.Push (myMesh.GetVertexNorByIndex (vrts_unselected[i]));
-		currentVrtNors_unselected.Push (myMesh.GetVertexNorByIndex (vrts_unselected[i]));
-	}
+	// 	vrtNors_unselected.Push (myMesh.GetVertexNorByIndex (vrts_unselected[i]));
+	// 	currentVrtNors_unselected.Push (myMesh.GetVertexNorByIndex (vrts_unselected[i]));
+	// }
 
+	// World 상에 활용할 수 있도록 계산
 	for (int i = 0; i < vrtLocs_postSelected.Num(); i++)
 	{
 		FVector offset = vrtLocs_postSelected[i];
@@ -496,23 +502,21 @@ void AMyHarris3D::InitSelectedVertexLocation()
 		currentVrtNors_postSelected [i] = actorRotation.RotateVector(vrtNors_postSelected [i]);
 	}
 
-	for (int i = 0; i < vrtLocs_unselected.Num(); i++)
-	{
-		FVector offset = vrtLocs_unselected[i];
-		offset *= actorScale;
-		offset = actorRotation.RotateVector(offset);
+	// for (int i = 0; i < vrtLocs_unselected.Num(); i++)
+	// {
+	// 	FVector offset = vrtLocs_unselected[i];
+	// 	offset *= actorScale;
+	// 	offset = actorRotation.RotateVector(offset);
 		
-		currentVrtLocs_unselected [i] = actorLocation + offset;
-		currentVrtNors_unselected [i] = actorRotation.RotateVector(vrtNors_unselected [i]);
-	}
+	// 	currentVrtLocs_unselected [i] = actorLocation + offset;
+	// 	currentVrtNors_unselected [i] = actorRotation.RotateVector(vrtNors_unselected [i]);
+	// }
 }
 
 
 void AMyHarris3D::UpdateSelectedVertexLocation()
 {
 	FTimerHandle debugDrawWaitHandle;
-	
-	float WaitTime = 0.1; //시간 설정
 
 	if (GetWorld())
 	GetWorld()->GetTimerManager().SetTimer(debugDrawWaitHandle, FTimerDelegate::CreateLambda([&]()
@@ -531,44 +535,44 @@ void AMyHarris3D::UpdateSelectedVertexLocation()
 				if (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_BUMP)
 					DrawDebugLine(GetWorld()
 					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-					, FColorList::Red, false, 0.1, 0, 1);
+					, FColorList::Red, false, DEBUG_DRAW_PERIOD, 0, 1);
 				else if (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_SINK)
 					DrawDebugLine(GetWorld()
 					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-					, FColorList::Green, false, 0.1, 0, 1);
+					, FColorList::Green, false, DEBUG_DRAW_PERIOD, 0, 1);
 				else if (myMesh.GetVertices ()[vrts_postSelected[i]].GetVertexType() == EVertexType::VERTEX_FLAT)
 					DrawDebugLine(GetWorld()
 					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-					, FColorList::Orange, false, 0.1, 0, 1);
+					, FColorList::Orange, false, DEBUG_DRAW_PERIOD, 0, 1);
 				else
 					DrawDebugLine(GetWorld()
 					, currentVrtLocs_postSelected[i], currentVrtLocs_postSelected[i]+4*currentVrtNors_postSelected[i]
-					, FColorList::Black, false, 0.1, 0, 1);
+					, FColorList::Black, false, DEBUG_DRAW_PERIOD, 0, 1);
 			}
 
 		}
 
-		for (int i = 0; i < vrtLocs_unselected.Num(); i++)
-		{
-			FVector offset = vrtLocs_unselected[i];
-			offset *= actorScale;
-			offset = actorRotation.RotateVector(offset);
+		// for (int i = 0; i < vrtLocs_unselected.Num(); i++)
+		// {
+		// 	FVector offset = vrtLocs_unselected[i];
+		// 	offset *= actorScale;
+		// 	offset = actorRotation.RotateVector(offset);
 			
-			currentVrtLocs_unselected [i] = actorLocation + offset;
-			currentVrtNors_unselected [i] = actorRotation.RotateVector(vrtNors_unselected [i]);
+		// 	currentVrtLocs_unselected [i] = actorLocation + offset;
+		// 	currentVrtNors_unselected [i] = actorRotation.RotateVector(vrtNors_unselected [i]);
 
-			if (m_debugDraw == true && m_debugDraw_unselected == true)
-				DrawDebugLine(GetWorld()
-					, currentVrtLocs_unselected[i], currentVrtLocs_unselected[i]+4*currentVrtNors_unselected[i]
-					, FColorList::Yellow, false, 0.1, 0, 1);
-		}
+		// 	if (m_debugDraw == true && m_debugDraw_unselected == true)
+		// 		DrawDebugLine(GetWorld()
+		// 			, currentVrtLocs_unselected[i], currentVrtLocs_unselected[i]+4*currentVrtNors_unselected[i]
+		// 			, FColorList::Yellow, false, 0.1, 0, 1);
+		// }
 
 		actorLocation = GetActorLocation();
 		actorScale = GetActorScale();
 		actorRotation = GetActorRotation();
 
 		GetWorld()->GetTimerManager().ClearTimer(debugDrawWaitHandle);
-	}), WaitTime, true); //반복도 여기서 추가 변수를 선언해 설정가능
+	}), DEBUG_DRAW_PERIOD, true); //반복도 여기서 추가 변수를 선언해 설정가능
 }
 
 FVector AMyHarris3D::GetVertexLocationByIndex (int i)
